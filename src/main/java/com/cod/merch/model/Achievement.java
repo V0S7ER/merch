@@ -1,16 +1,14 @@
 package com.cod.merch.model;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity(name = "achievement")
 @Getter
 @Setter
-@AllArgsConstructor
 public class Achievement {
 
     @Id
@@ -21,26 +19,21 @@ public class Achievement {
 
     private Long cost;
 
-    private String description;
+    private String description; //fields
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "achievement")
+    private List<User2Achieve> user2AchieveList; //OneToMany
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "achievementList", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private List<User> receivedUsers;
+    private List<User> receivedUsers; //ManyToMany
+
+    public Achievement(String name, Long cost, String description) {
+        this.name = name;
+        this.cost = cost;
+        this.description = description;
+    }
 
     public Achievement() {
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Achievement that = (Achievement) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }

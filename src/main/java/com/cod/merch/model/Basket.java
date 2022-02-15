@@ -5,11 +5,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity(name = "user2achieve")
+@Entity(name = "basket")
 @Getter
 @Setter
-public class User2Achieve {
-
+public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +24,6 @@ public class User2Achieve {
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
-    @JoinColumn(name = "achievement_id")
-    private Achievement achievement;
+    @JoinColumn(name = "item_id")
+    private Item item;
 }

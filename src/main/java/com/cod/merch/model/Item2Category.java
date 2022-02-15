@@ -1,14 +1,16 @@
 package com.cod.merch.model;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity(name = "user2achieve")
+@Entity(name = "item2category")
 @Getter
 @Setter
-public class User2Achieve {
+@RequiredArgsConstructor
+public class Item2Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +20,13 @@ public class User2Achieve {
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     @ManyToOne(cascade = {
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
-    @JoinColumn(name = "achievement_id")
-    private Achievement achievement;
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

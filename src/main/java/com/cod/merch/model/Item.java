@@ -1,16 +1,14 @@
 package com.cod.merch.model;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity(name = "item")
 @Getter
 @Setter
-@AllArgsConstructor
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,25 +18,35 @@ public class Item {
 
     private Long price;
 
-    private String description;
+    private String description; //Fields
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    private List<Item2Category> item2categoryList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    private List<Wish> user2itemWish;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    private List<Basket> user2itemBasket; //OneToMany
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "item2category",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<Category> categoryList;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "wishList")
     private List<User> wantedUsers;
 
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "basket")
+    private List<User> basketUsers; //ManyToMany
+
+    public Item(String name, Long price, String description) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+    }
     public Item() {
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Item item = (Item) o;
-        return id != null && Objects.equals(id, item.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }

@@ -1,17 +1,15 @@
 package com.cod.merch.model;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Entity(name = "contest")
 @Getter
 @Setter
-@AllArgsConstructor
 public class Contest {
 
     @Id
@@ -20,27 +18,19 @@ public class Contest {
 
     String name;
 
-    Date date;
+    Date date; //fields
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contest")
+    private List<User2Contest> user2ContestList; //OneToMany
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "wonContests")
-    private List<User> winners;
+    private List<User> winners; //ManyToMany
 
+    public Contest(String name, Date date) {
+        this.name = name;
+        this.date = date;
+    }
     public Contest() {
 
-    }
-
-    //TODO: add WinnerList, add ParticipantList
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Contest contest = (Contest) o;
-        return id != null && Objects.equals(id, contest.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+    } //Costructors
 }
