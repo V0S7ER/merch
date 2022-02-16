@@ -41,25 +41,25 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Wish> user2itemWish; //OneToMany c связывающими таблицами
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "user2achieve",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "achieve_id"))
+            inverseJoinColumns = @JoinColumn(name = "achievement_id"))
     private List<Achievement> achievementList;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "wish",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> wishList;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "user2contest",
-            joinColumns = @JoinColumn(name = "user_ir"),
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "contest_id"))
     private List<Contest> wonContests;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "basket",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "item_id"))
@@ -78,7 +78,7 @@ public class User {
 
     public User() {
 
-    } //Costructors
+    } //Constructors
 
     public void addToWish(Item item) {
         wishList.add(item);
@@ -112,5 +112,6 @@ public class User {
 
     public void addAchievement(Achievement achievement) {
         achievementList.add(achievement);
+        balance += achievement.getCost();
     } //Achievement communicate
 }

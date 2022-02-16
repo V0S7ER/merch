@@ -66,6 +66,10 @@ public class AdminService {
             return false;
         }
         try {
+            if(request.getName() == null || request.getName().isEmpty()) return false;
+            if(request.getPhoto() == null || request.getPhoto().isEmpty()) return false;
+            if(request.getCost() == null) return false;
+            if(request.getDescription() == null || request.getDescription().isEmpty()) return false;
             Achievement achievement = new Achievement(request.getName(), request.getCost(), request.getDescription(), request.getPhoto());
             achievementRepository.save(achievement);
             return true;
@@ -79,6 +83,8 @@ public class AdminService {
             return false;
         }
         try {
+            if(request.getDate() == null) return false;
+            if(request.getName() == null || request.getName().isEmpty()) return false;
             Contest contest = new Contest(request.getName(), request.getDate());
             contestRepository.save(contest);
             return true;
@@ -93,6 +99,10 @@ public class AdminService {
             return false;
         }
         try {
+            if(request.getName() == null || request.getName().isEmpty()) return false;
+            if(request.getPrice() == null) return false;
+            if(request.getDescription() == null || request.getDescription().isEmpty()) return false;
+            if(request.getPhoto() == null || request.getPhoto().isEmpty()) return false;
             Item item = new Item(request.getName(), request.getPrice(), request.getDescription(), request.getPhoto());
             itemRepository.save(item);
             return true;
@@ -140,6 +150,9 @@ public class AdminService {
             }
             if (request.getDescription() != null && !request.getDescription().isEmpty()) {
                 achievement.setDescription(request.getDescription());
+            }
+            if(request.getPhoto() != null && !request.getPhoto().isEmpty()) {
+                achievement.setPhoto(request.getPhoto());
             }
             achievementRepository.save(achievement);
             return true;

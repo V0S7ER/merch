@@ -1,9 +1,9 @@
 package com.cod.merch.model.DTO;
 
 import com.cod.merch.model.Item;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class ItemDTO {
     private Long id;
     private String name;

@@ -254,4 +254,27 @@ public class GetService {
             return null;
         }
     }
+
+    public List<CategoryDTO> getCategoriesByItemId(Long id) {
+        try {
+            Optional<Item> itemOptional = itemRepository.findById(id);
+            if(itemOptional.isEmpty()) return null;
+            Item item = itemOptional.get();
+            return transformListCategory(item.getCategoryList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<UserDTO> getUsersByAchievementId(Long id) {
+        try {
+            Optional<Achievement> achievementOptional = achievementRepository.findById(id);
+            if(achievementOptional.isEmpty()) return null;
+            return transformListUser(achievementOptional.get().getReceivedUsers());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

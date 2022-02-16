@@ -1,11 +1,11 @@
 package com.cod.merch.model.DTO.request;
 
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.lang.Nullable;
 
 import java.util.Date;
 
-@Getter
+@Data
 public class ContestRequest {
     @Nullable
     private String name;

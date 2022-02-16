@@ -33,16 +33,16 @@ public class Item {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     private List<Basket> user2itemBasket; //OneToMany
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "item2category",
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categoryList;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "wishList")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "wishList", fetch = FetchType.LAZY)
     private List<User> wantedUsers;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "basket")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "basket", fetch = FetchType.LAZY)
     private List<User> basketUsers; //ManyToMany
 
     public Item(String name, Long price, String description, String photo) {

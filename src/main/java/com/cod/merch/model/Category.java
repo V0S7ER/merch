@@ -19,9 +19,9 @@ public class Category {
 
     private String description; //fields
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.LAZY)
     private List<Item2Category> item2CategoryList;//OneToMany
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categoryList")
+    @ManyToMany(mappedBy = "categoryList", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private List<Item> itemList; //ManyToMany
 }

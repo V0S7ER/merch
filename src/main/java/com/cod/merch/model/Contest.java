@@ -20,10 +20,10 @@ public class Contest {
 
     Date date; //fields
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contest")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contest", fetch = FetchType.LAZY)
     private List<User2Contest> user2ContestList; //OneToMany
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "wonContests")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "wonContests", fetch = FetchType.LAZY)
     private List<User> winners; //ManyToMany
 
     public Contest(String name, Date date) {
@@ -32,5 +32,5 @@ public class Contest {
     }
     public Contest() {
 
-    } //Costructors
+    } //Constructors
 }

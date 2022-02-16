@@ -24,10 +24,10 @@ public class Achievement {
     private String photo;
     //fields
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "achievement")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "achievement", fetch = FetchType.LAZY)
     private List<User2Achieve> user2AchieveList; //OneToMany
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "achievementList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "achievementList", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<User> receivedUsers; //ManyToMany
 
     public Achievement(String name, Long cost, String description, String photo) {

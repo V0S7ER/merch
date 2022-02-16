@@ -1,10 +1,6 @@
 package com.cod.merch.controller;
 
-import com.cod.merch.model.DTO.AchievementDTO;
-import com.cod.merch.model.DTO.ContestDTO;
-import com.cod.merch.model.DTO.ItemDTO;
-import com.cod.merch.model.DTO.UserDTO;
-import com.cod.merch.model.DTO.CategoryDTO;
+import com.cod.merch.model.DTO.*;
 import com.cod.merch.service.GetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -100,6 +96,18 @@ public class GetController {
     @GetMapping(value = "/achievement/locked/{id}")
     public synchronized ResponseEntity<List<AchievementDTO>> getLockedAchievementsByUserId(@PathVariable Long id) {
         List<AchievementDTO> ans = getService.getLockedAchievementsByUserId(id);
+        return ans == null ? BAD_REQUEST : ResponseEntity.ok(ans);
+    }
+
+    @GetMapping(value = "/achievement/users/{id}")
+    public synchronized ResponseEntity<List<UserDTO>> getUsersByAchievementId(@PathVariable Long id) {
+        List<UserDTO> ans = getService.getUsersByAchievementId(id);
+        return ans == null ? BAD_REQUEST : ResponseEntity.ok(ans);
+    }
+
+    @GetMapping(value = "/item/category/{id}")
+    public synchronized ResponseEntity<List<CategoryDTO>> getCategoriesByItemId(@PathVariable Long id) {
+        List<CategoryDTO> ans = getService.getCategoriesByItemId(id);
         return ans == null ? BAD_REQUEST : ResponseEntity.ok(ans);
     }
 }
