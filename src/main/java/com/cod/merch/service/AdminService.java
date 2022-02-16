@@ -54,7 +54,7 @@ public class AdminService {
             Contest contest = contestOptional.get();
             user.addWonContest(contest);
             userRepository.save(user);
-            contestRepository.save(contest);
+            //contestRepository.save(contest);
             return true;
         } catch (Exception e) {
             return false;
@@ -75,7 +75,7 @@ public class AdminService {
     }
 
     public boolean createContest(ContestRequest request) {
-        if(!isAdmin(request.getAdminEmail(), request.getAdminPassword())) {
+        if(!isAdmin(request.getAdmin_email(), request.getAdmin_password())) {
             return false;
         }
         try {
@@ -107,13 +107,13 @@ public class AdminService {
             Optional<Item> itemOptional = itemRepository.findById(id);
             if (itemOptional.isEmpty()) return false;
             Item item = itemOptional.get();
-            if (!request.getName().isEmpty()) {
+            if (request.getName() != null && !request.getName().isEmpty()) {
                 item.setName(request.getName());
             }
             if (request.getPrice() != null) {
                 item.setPrice(request.getPrice());
             }
-            if (request.getDescription() != null) {
+            if (request.getDescription() != null && !request.getDescription().isEmpty()) {
                 item.setDescription(request.getDescription());
             }
             itemRepository.save(item);
@@ -121,7 +121,6 @@ public class AdminService {
         } catch (Exception e) {
             return false;
         }
-
     }
 
     public boolean changeAchievement(Long id, AchievementRequest request) { //name cost description
@@ -130,13 +129,13 @@ public class AdminService {
             Optional<Achievement> achievementOptional = achievementRepository.findById(id);
             if (achievementOptional.isEmpty()) return false;
             Achievement achievement = achievementOptional.get();
-            if (!request.getName().isEmpty()) {
+            if (request.getName() != null && !request.getName().isEmpty()) {
                 achievement.setName(request.getName());
             }
             if (request.getCost() != null) {
                 achievement.setCost(request.getCost());
             }
-            if (request.getDescription() != null) {
+            if (request.getDescription() != null && !request.getDescription().isEmpty()) {
                 achievement.setDescription(request.getDescription());
             }
             achievementRepository.save(achievement);
@@ -147,12 +146,12 @@ public class AdminService {
     }
 
     public boolean changeContest(Long id, ContestRequest request) {
-        if(!isAdmin(request.getAdminEmail(), request.getAdminPassword())) return false;
+        if(!isAdmin(request.getAdmin_email(), request.getAdmin_password())) return false;
         try {
             Optional<Contest> contestOptional = contestRepository.findById(id);
             if (contestOptional.isEmpty()) return false;
             Contest contest = contestOptional.get();
-            if (!request.getName().isEmpty()) {
+            if (request.getName() != null && !request.getName().isEmpty()) {
                 contest.setName(request.getName());
             }
             if(request.getDate() != null) {
@@ -165,8 +164,8 @@ public class AdminService {
         }
     }
 
-    public boolean deleteContest(Long id, String adminEmail, String adminPassword) {
-        if(!isAdmin(adminEmail, adminPassword)) return false;
+    public boolean deleteContest(Long id, String admin_email, String admin_password) {
+        if(!isAdmin(admin_email, admin_password)) return false;
         try {
             userRepository.deleteById(id);
             return true;
@@ -174,8 +173,8 @@ public class AdminService {
             return false;
         }
     }
-    public boolean deleteItem(Long id, String adminEmail, String adminPassword) {
-        if(!isAdmin(adminEmail, adminPassword)) return false;
+    public boolean deleteItem(Long id, String admin_email, String admin_password) {
+        if(!isAdmin(admin_email, admin_password)) return false;
         try {
             itemRepository.deleteById(id);
             return true;
@@ -183,8 +182,8 @@ public class AdminService {
             return false;
         }
     }
-    public boolean deleteAchievement(Long id, String adminEmail, String adminPassword) {
-        if(!isAdmin(adminEmail, adminPassword)) return false;
+    public boolean deleteAchievement(Long id, String admin_email, String admin_password) {
+        if(!isAdmin(admin_email, admin_password)) return false;
         try {
             achievementRepository.deleteById(id);
             return true;
@@ -194,11 +193,16 @@ public class AdminService {
     }
 
     private boolean isAdmin(String email, String password) {
-        if(email == null) return false;
-        if(password == null) return false;
-        if(email.isEmpty() || password.isEmpty()) return false;
-        Optional<User> user = userRepository.findByEmailAndPassword(email, password);
-        if(user.isEmpty()) return false;
-        return user.get().getIsAdmin();
+        try {
+            if (email == null) return false;
+            if (password == null) return false;
+            if (email.isEmpty() || password.isEmpty()) return false;
+            Optional<User> user = userRepository.findByEmailAndPassword(email, password);
+            if (user.isEmpty()) return false;
+            return user.get().getIsAdmin();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

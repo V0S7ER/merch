@@ -1,18 +1,19 @@
 package com.cod.merch.model.DTO.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.lang.Nullable;
 
 @Getter
 @AllArgsConstructor
 public class AchievementRequest {
+    @Nullable
     private String name;
+    @Nullable
     private Long cost;
+    @Nullable
     private String description;
 
-    @JsonProperty("admin_email")
     private String admin_email;
-    @JsonProperty("admin_password")
     private String admin_password;
 }

@@ -79,6 +79,12 @@ public class AdminController {
         return adminReturn(OK);
     }
 
+    @RequestMapping(value = "/contest/add_winner", method = RequestMethod.POST)
+    public synchronized ResponseEntity addContestWinner(Long user_id, Long contest_id, String admin_email, String admin_password) {
+        boolean OK = adminService.addContestWinner(user_id, contest_id, admin_email, admin_password);
+        return adminReturn(OK);
+    }
+
     private ResponseEntity adminReturn(boolean OK) {
         return OK ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
     }

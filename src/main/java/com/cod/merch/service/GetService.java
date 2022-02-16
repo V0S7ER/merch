@@ -138,6 +138,27 @@ public class GetService {
         }
     }
 
+    public List<ContestDTO> getAllContests() {
+        try {
+            List<Contest> contests = contestRepository.findAll();
+            return transformListContest(contests);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ContestDTO getContestById(Long id) {
+        try {
+            Optional<Contest> contestOptional = contestRepository.findById(id);
+            if(contestOptional.isEmpty()) return null;
+            return new ContestDTO(contestOptional.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private List<CategoryDTO> transformListCategory(List<Category> categoryList) {
         try {
             List<CategoryDTO> ans = new ArrayList<>();
