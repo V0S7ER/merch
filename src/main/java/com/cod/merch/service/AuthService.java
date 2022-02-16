@@ -25,7 +25,7 @@ public class AuthService {
                     request.getSurname(),
                     request.getPassword(),
                     request.isSex(),
-                    new Department(),
+                    department,
                     request.getEmail());
             userRepository.save(user);
             return true;

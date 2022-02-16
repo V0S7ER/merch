@@ -1,5 +1,6 @@
 package com.cod.merch.controller;
 
+import com.cod.merch.model.DTO.AchievementDTO;
 import com.cod.merch.model.DTO.ContestDTO;
 import com.cod.merch.model.DTO.ItemDTO;
 import com.cod.merch.model.DTO.UserDTO;
@@ -76,5 +77,17 @@ public class GetController {
     public synchronized ResponseEntity<ContestDTO> getContestById(@PathVariable Long id) {
         ContestDTO contest = getService.getContestById(id);
         return contest == null ? BAD_REQUEST : ResponseEntity.ok(contest);
+    }
+
+    @GetMapping(value = "/department/all_users/{id}")
+    public synchronized ResponseEntity<List<UserDTO>> getAllUsersByDepartmentId(@PathVariable Long id) {
+        List<UserDTO> ans = getService.getUsersByDepartmentId(id);
+        return ans == null ? BAD_REQUEST : ResponseEntity.ok(ans);
+    }
+
+    @GetMapping(value = "/user/get_achievements/{id}")
+    public synchronized ResponseEntity<List<AchievementDTO>> getAllAchievementsByUserId(@PathVariable Long id) {
+        List<AchievementDTO> ans = getService.getAchievementsByUserId(id);
+        return ans == null ? BAD_REQUEST : ResponseEntity.ok(ans);
     }
 }

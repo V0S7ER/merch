@@ -1,17 +1,12 @@
 package com.cod.merch.service;
 
-import com.cod.merch.model.Category;
-import com.cod.merch.model.Contest;
+import com.cod.merch.model.*;
+import com.cod.merch.model.DTO.AchievementDTO;
 import com.cod.merch.model.DTO.ContestDTO;
 import com.cod.merch.model.DTO.ItemDTO;
 import com.cod.merch.model.DTO.UserDTO;
 import com.cod.merch.model.DTO.request.CategoryDTO;
-import com.cod.merch.model.Item;
-import com.cod.merch.model.User;
-import com.cod.merch.repository.CategoryRepository;
-import com.cod.merch.repository.ContestRepository;
-import com.cod.merch.repository.ItemRepository;
-import com.cod.merch.repository.UserRepository;
+import com.cod.merch.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +22,7 @@ public class GetService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final ContestRepository contestRepository;
+    private final DepartmentRepository departmentRepository;
 
     public ItemDTO getItemById(Long id) {
         try {
@@ -153,6 +149,41 @@ public class GetService {
             Optional<Contest> contestOptional = contestRepository.findById(id);
             if(contestOptional.isEmpty()) return null;
             return new ContestDTO(contestOptional.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<UserDTO> getUsersByDepartmentId(Long id) {
+        try {
+            Optional<Department> departmentOptional = departmentRepository.findById(id);
+            if (departmentOptional.isEmpty()) return null;
+            return transformListUser(departmentOptional.get().getUserList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<AchievementDTO> getAchievementsByUserId(Long id) {
+        try {
+            User user = getUser(id);
+            if(user == null) return null;
+            return transformListAchievement(user.getAchievementList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private List<AchievementDTO> transformListAchievement(List<Achievement> list) {
+        try {
+            List<AchievementDTO> ans = new ArrayList<>();
+            for(var el : list) {
+                ans.add(new AchievementDTO(el));
+            }
+            return ans;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

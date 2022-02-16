@@ -192,6 +192,20 @@ public class AdminService {
         }
     }
 
+    public boolean setUserBalance(Long id, String admin_email, String admin_password, Long balance) {
+        if(!isAdmin(admin_email, admin_password)) return false;
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+            if(userOptional.isEmpty()) return false;
+            User user = userOptional.get();
+            user.setBalance(balance);
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private boolean isAdmin(String email, String password) {
         try {
             if (email == null) return false;

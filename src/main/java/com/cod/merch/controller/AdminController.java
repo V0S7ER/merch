@@ -8,80 +8,84 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-@Controller()
+@Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/admin")
 public class AdminController {
 
     private final AdminService adminService;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @PostMapping(value = "/{id}")
     public synchronized ResponseEntity setAdmin(@PathVariable Long id, String admin_email, String admin_password) {
         boolean OK = adminService.setAdmin(id, admin_email, admin_password);
         return adminReturn(OK);
     }
 
-    @RequestMapping(value = "/achievement", method = RequestMethod.POST)
+    @PostMapping(value = "/achievement")
     public synchronized ResponseEntity createAchievement(AchievementRequest request) {
         boolean OK = adminService.createAchievement(request);
         return adminReturn(OK);
     }
 
-    @RequestMapping(value =  "/contest", method = RequestMethod.POST)
+    @PostMapping(value =  "/contest")
     public synchronized ResponseEntity createContest(ContestRequest request) {
         boolean OK = adminService.createContest(request);
         return adminReturn(OK);
     }
 
-    @RequestMapping(value = "/item", method = RequestMethod.POST)
+    @PostMapping(value = "/item")
     public synchronized ResponseEntity createItem(ItemRequest request) {
         boolean OK = adminService.createItem(request);
         return OK ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/item/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/item/{id}")
     public synchronized ResponseEntity changeItem(@PathVariable Long id, ItemRequest request) {
         boolean OK = adminService.changeItem(id, request);
         return adminReturn(OK);
     }
 
-    @RequestMapping(value = "/contest/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/contest/{id}")
     public synchronized ResponseEntity changeContest(@PathVariable Long id, ContestRequest request) {
         boolean OK = adminService.changeContest(id, request);
         return adminReturn(OK);
     }
 
-    @RequestMapping(value = "/achievement/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/achievement/{id}")
     public synchronized ResponseEntity changeAchievement(@PathVariable Long id, AchievementRequest request) {
         boolean OK = adminService.changeAchievement(id, request);
         return adminReturn(OK);
     }
 
-    @RequestMapping(value = "/achievement/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/achievement/{id}")
     public synchronized ResponseEntity deleteAchievement(@PathVariable Long id, String admin_email, String admin_password) {
         boolean OK = adminService.deleteAchievement(id, admin_email, admin_password);
         return adminReturn(OK);
     }
 
-    @RequestMapping(value = "/item/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/item/{id}")
     public synchronized ResponseEntity deleteItem(@PathVariable Long id, String admin_email, String admin_password) {
         boolean OK = adminService.deleteItem(id, admin_email, admin_password);
         return adminReturn(OK);
     }
 
-    @RequestMapping(value = "/contest/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/contest/{id}")
     public synchronized ResponseEntity deleteContest(@PathVariable Long id, String admin_email, String admin_password) {
         boolean OK = adminService.deleteContest(id, admin_email, admin_password);
         return adminReturn(OK);
     }
 
-    @RequestMapping(value = "/contest/add_winner", method = RequestMethod.POST)
+    @PostMapping(value = "/contest/add_winner")
     public synchronized ResponseEntity addContestWinner(Long user_id, Long contest_id, String admin_email, String admin_password) {
         boolean OK = adminService.addContestWinner(user_id, contest_id, admin_email, admin_password);
+        return adminReturn(OK);
+    }
+
+    @PostMapping(value = "/user/balance/{id}")
+    public synchronized ResponseEntity setUserBalanceByUserId(@PathVariable Long id, String admin_email, String admin_password, Long balance) {
+        boolean OK = adminService.setUserBalance(id, admin_email, admin_password, balance);
         return adminReturn(OK);
     }
 
