@@ -90,4 +90,16 @@ public class GetController {
         List<AchievementDTO> ans = getService.getAchievementsByUserId(id);
         return ans == null ? BAD_REQUEST : ResponseEntity.ok(ans);
     }
+
+    @GetMapping(value = "/achievement/all")
+    public synchronized ResponseEntity<List<AchievementDTO>> getAllAchievements() {
+        List<AchievementDTO> ans = getService.getAllAchievements();
+        return ans == null ? BAD_REQUEST : ResponseEntity.ok(ans);
+    }
+
+    @GetMapping(value = "/achievement/locked/{id}")
+    public synchronized ResponseEntity<List<AchievementDTO>> getLockedAchievementsByUserId(@PathVariable Long id) {
+        List<AchievementDTO> ans = getService.getLockedAchievementsByUserId(id);
+        return ans == null ? BAD_REQUEST : ResponseEntity.ok(ans);
+    }
 }

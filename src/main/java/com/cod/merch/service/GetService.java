@@ -23,6 +23,7 @@ public class GetService {
     private final UserRepository userRepository;
     private final ContestRepository contestRepository;
     private final DepartmentRepository departmentRepository;
+    private final AchievementRepository achievementRepository;
 
     public ItemDTO getItemById(Long id) {
         try {
@@ -160,6 +161,31 @@ public class GetService {
             Optional<Department> departmentOptional = departmentRepository.findById(id);
             if (departmentOptional.isEmpty()) return null;
             return transformListUser(departmentOptional.get().getUserList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<AchievementDTO> getAllAchievements() {
+        try {
+            List<Achievement> achievementList = achievementRepository.findAll();
+            return transformListAchievement(achievementList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<AchievementDTO> getLockedAchievementsByUserId(Long id) {
+        try {
+            User user = getUser(id);
+            if(user == null) return null;
+            List<Achievement> all = achievementRepository.findAll();
+            List<Achievement> userAchievements = user.getAchievementList();
+            List<Achievement> ans = new ArrayList<>(all);
+            ans.removeAll(userAchievements);
+            return transformListAchievement(ans);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
