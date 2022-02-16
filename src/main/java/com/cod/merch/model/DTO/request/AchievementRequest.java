@@ -13,6 +13,8 @@ public class AchievementRequest {
     private Long cost;
     @Nullable
     private String description;
+    @Nullable
+    private String photo;
 
     private String admin_email;
     private String admin_password;

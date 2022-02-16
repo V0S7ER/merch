@@ -5,7 +5,7 @@ import com.cod.merch.model.DTO.AchievementDTO;
 import com.cod.merch.model.DTO.ContestDTO;
 import com.cod.merch.model.DTO.ItemDTO;
 import com.cod.merch.model.DTO.UserDTO;
-import com.cod.merch.model.DTO.request.CategoryDTO;
+import com.cod.merch.model.DTO.CategoryDTO;
 import com.cod.merch.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

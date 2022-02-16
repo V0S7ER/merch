@@ -66,7 +66,7 @@ public class AdminService {
             return false;
         }
         try {
-            Achievement achievement = new Achievement(request.getName(), request.getCost(), request.getDescription());
+            Achievement achievement = new Achievement(request.getName(), request.getCost(), request.getDescription(), request.getPhoto());
             achievementRepository.save(achievement);
             return true;
         } catch (Exception e) {
@@ -93,7 +93,7 @@ public class AdminService {
             return false;
         }
         try {
-            Item item = new Item(request.getName(), request.getPrice(), request.getDescription());
+            Item item = new Item(request.getName(), request.getPrice(), request.getDescription(), request.getPhoto());
             itemRepository.save(item);
             return true;
         } catch (Exception e) {
@@ -115,6 +115,9 @@ public class AdminService {
             }
             if (request.getDescription() != null && !request.getDescription().isEmpty()) {
                 item.setDescription(request.getDescription());
+            }
+            if(request.getPhoto() != null && !request.getPhoto().isEmpty()) {
+                item.setPhoto(request.getPhoto());
             }
             itemRepository.save(item);
             return true;
@@ -188,6 +191,24 @@ public class AdminService {
             achievementRepository.deleteById(id);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean setAchievementToUser(Long user_id, Long achievement_id, String admin_email, String admin_password) {
+        if(!isAdmin(admin_email,admin_password )) return false;
+        try {
+            Optional<User> userOptional = userRepository.findById(user_id);
+            Optional<Achievement> achievementOptional = achievementRepository.findById(achievement_id);
+            if(userOptional.isEmpty() || achievementOptional.isEmpty()) return false;
+            User user = userOptional.get();
+            Achievement achievement = achievementOptional.get();
+            user.addAchievement(achievement);
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

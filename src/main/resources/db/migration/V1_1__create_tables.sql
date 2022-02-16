@@ -1,9 +1,9 @@
-create table achievement (id bigint not null auto_increment, cost bigint, description varchar(255), name varchar(255), primary key (id));
+create table achievement (id bigint not null auto_increment, cost bigint, description varchar(255), name varchar(255), photo varchar(255), primary key (id));
 create table basket (id bigint not null auto_increment, item_id bigint, user_id bigint, primary key (id));
 create table category (id bigint not null auto_increment, description varchar(255), name varchar(255), primary key (id));
 create table contest (id bigint not null auto_increment, date datetime(6), name varchar(255), primary key (id));
 create table department (id bigint not null auto_increment, description varchar(255), name varchar(255), primary key (id));
-create table item (id bigint not null auto_increment, description varchar(255), name varchar(255), price bigint, primary key (id));
+create table item (id bigint not null auto_increment, description varchar(255), name varchar(255), price bigint, photo varchar(255), primary key (id));
 create table item2category (id bigint not null auto_increment, category_id bigint, item_id bigint, primary key (id));
 create table user (id bigint not null auto_increment, balance bigint, email varchar(255), admin bit, name varchar(255), password varchar(255), sex bit, surname varchar(255), department_id bigint, primary key (id));
 create table user2achieve (id bigint not null auto_increment, achievement_id bigint, user_id bigint, achieve_id bigint not null, primary key (id));

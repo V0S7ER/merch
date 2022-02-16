@@ -89,6 +89,12 @@ public class AdminController {
         return adminReturn(OK);
     }
 
+    @PostMapping(value = "/user/achievement/{user_id}")
+    public synchronized ResponseEntity addAchievementToUser(Long achievement_id, @PathVariable Long user_id, String admin_email, String admin_password) {
+        boolean OK = adminService.setAchievementToUser(user_id, achievement_id, admin_email, admin_password);
+        return adminReturn(OK);
+    }
+
     private ResponseEntity adminReturn(boolean OK) {
         return OK ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
     }

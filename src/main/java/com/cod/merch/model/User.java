@@ -29,7 +29,6 @@ public class User {
     @JoinColumn(name = "department_id")
     private Department department;//Fields
 
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<User2Achieve> user2AchieveList;
 
@@ -110,4 +109,8 @@ public class User {
         wonContests.add(contest);
         balance += 100L;
     } //Contest communicate
+
+    public void addAchievement(Achievement achievement) {
+        achievementList.add(achievement);
+    } //Achievement communicate
 }

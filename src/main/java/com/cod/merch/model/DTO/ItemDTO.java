@@ -9,11 +9,13 @@ public class ItemDTO {
     private String name;
     private Long price;
     private String description;
+    private String photo;
 
     public ItemDTO(Item item) {
         id = item.getId();
         name = item.getName();
         price = item.getPrice();
         description = item.getDescription();
+        photo = item.getPhoto();
     }
 }

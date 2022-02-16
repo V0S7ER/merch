@@ -1,7 +1,6 @@
-package com.cod.merch.model.DTO.request;
+package com.cod.merch.model.DTO;
 
 import com.cod.merch.model.Category;
-import com.cod.merch.model.DTO.ItemDTO;
 import lombok.Data;
 
 import java.util.ArrayList;

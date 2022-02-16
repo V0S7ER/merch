@@ -1,10 +1,9 @@
 package com.cod.merch.model.DTO;
 
 import com.cod.merch.model.User;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
+@Data
 public class UserDTO {
     private Long id;
     private String email;
@@ -13,7 +12,6 @@ public class UserDTO {
     private boolean sex;
     private boolean admin;
     private Long balance;
-    @JsonProperty("department")
     private DepartmentDTO department;
     public UserDTO(User user) {
         department = new DepartmentDTO(user.getDepartment());

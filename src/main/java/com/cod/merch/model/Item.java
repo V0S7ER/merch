@@ -18,7 +18,11 @@ public class Item {
 
     private Long price;
 
-    private String description; //Fields
+    private String description;
+
+    private String photo;
+
+    //Fields
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     private List<Item2Category> item2categoryList;
@@ -41,10 +45,11 @@ public class Item {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "basket")
     private List<User> basketUsers; //ManyToMany
 
-    public Item(String name, Long price, String description) {
+    public Item(String name, Long price, String description, String photo) {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.photo = photo;
     }
     public Item() {
 

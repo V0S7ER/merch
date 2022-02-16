@@ -1,11 +1,9 @@
 package com.cod.merch.model.DTO.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.lang.Nullable;
 
-@Getter
-@Setter
+@Data
 public class ItemRequest {
     @Nullable
     private String name;
@@ -13,6 +11,8 @@ public class ItemRequest {
     private Long price;
     @Nullable
     private String description;
+    @Nullable
+    private String photo;
 
     private String admin_email;
     private String admin_password;

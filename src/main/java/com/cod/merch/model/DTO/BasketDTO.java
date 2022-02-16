@@ -1,4 +1,4 @@
-package com.cod.merch.model.DTO.request;
+package com.cod.merch.model.DTO;
 
 import com.cod.merch.model.Item;
 import com.cod.merch.model.User;

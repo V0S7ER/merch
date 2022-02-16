@@ -1,0 +1,1 @@
+insert INTO user (id, balance, email, admin, name, password, sex, surname, department_id) VALUES (1, 1000000007, 'andrei.balabekyan@yandex.ru', 1, 'Андрей', 'nepes228', 1, 'Балабекян', 1);

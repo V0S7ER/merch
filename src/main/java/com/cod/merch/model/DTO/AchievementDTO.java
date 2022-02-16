@@ -9,11 +9,13 @@ public class AchievementDTO {
     private String name;
     private String description;
     private Long cost;
+    private String photo;
 
     public AchievementDTO(Achievement achievement) {
         id = achievement.getId();
         name = achievement.getName();
         description = achievement.getDescription();
         cost = achievement.getCost();
+        photo = achievement.getPhoto();
     }
 }
