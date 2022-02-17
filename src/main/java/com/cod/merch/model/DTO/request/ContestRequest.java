@@ -11,6 +11,8 @@ public class ContestRequest {
     private String name;
     @Nullable
     private Date date;
+    @Nullable
+    private Long cost;
 
     private String admin_email;
     private String admin_password;

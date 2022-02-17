@@ -16,9 +16,12 @@ public class Contest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    String name;
+    private String name;
 
-    Date date; //fields
+    private Date date;
+
+    private Long cost;
+    //fields
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contest", fetch = FetchType.LAZY)
     private List<User2Contest> user2ContestList; //OneToMany
@@ -26,9 +29,10 @@ public class Contest {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "wonContests", fetch = FetchType.LAZY)
     private List<User> winners; //ManyToMany
 
-    public Contest(String name, Date date) {
+    public Contest(String name, Date date, Long cost) {
         this.name = name;
         this.date = date;
+        this.cost = cost;
     }
     public Contest() {
 

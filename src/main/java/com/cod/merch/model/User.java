@@ -107,11 +107,25 @@ public class User {
 
     public void addWonContest(Contest contest) {
         wonContests.add(contest);
-        balance += 100L;
-    } //Contest communicate
+        balance += contest.getCost();
+    }
+
+    public void removeWonContest(Contest contest) {
+        if(wonContests.contains(contest)) {
+            wonContests.remove(contest);
+            //balance-=contest.getCost(); //Аналогично удалению ачивки: баланс НЕ МЕНЯЕМ, если уж ошиблись
+        }
+    }//Contest communicate
 
     public void addAchievement(Achievement achievement) {
         achievementList.add(achievement);
         balance += achievement.getCost();
-    } //Achievement communicate
+    }
+
+    public void removeAchievement(Achievement achievement) {
+        if(achievementList.contains(achievement)) {
+            achievementList.remove(achievement);
+            //balance-=achievement.getCost(); //Если юзеру было добавлена ачивка, то баланс уже нельзя уменьшить путем удаления ачивки, иначе мог бы быть отрицательный баланс
+        }
+    }//Achievement communicate
 }
