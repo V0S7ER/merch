@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class BasketDTO {
-    List<Item> basket;
+    private List<Item> basket;
 
     public BasketDTO(User user) {
         basket = user.getBasket();

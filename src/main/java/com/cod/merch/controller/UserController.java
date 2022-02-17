@@ -1,5 +1,6 @@
 package com.cod.merch.controller;
 
+import com.cod.merch.model.DTO.request.ChangeUserRequest;
 import com.cod.merch.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -62,6 +63,12 @@ public class UserController {
     @PostMapping(value = "/basket/buy/{item_id}")
     public synchronized ResponseEntity buyItem(@PathVariable Long item_id, String email, String password) {
         boolean OK = userService.buyItem(item_id, email, password);
+        return responseUser(OK);
+    }
+
+    @PostMapping(value = "/")
+    public synchronized ResponseEntity changeUser(ChangeUserRequest request) {
+        boolean OK = userService.changeUser(request);
         return responseUser(OK);
     }
 

@@ -103,7 +103,7 @@ public class GetService {
     public List<UserDTO> getWinnersByContestId(Long id) {
         try {
             Optional<Contest> contestOptional = contestRepository.findById(id);
-            if(contestOptional.isEmpty()) return null;
+            if (contestOptional.isEmpty()) return null;
             Contest contest = contestOptional.get();
             return transformListUser(contest.getWinners());
         } catch (Exception e) {
@@ -148,7 +148,7 @@ public class GetService {
     public ContestDTO getContestById(Long id) {
         try {
             Optional<Contest> contestOptional = contestRepository.findById(id);
-            if(contestOptional.isEmpty()) return null;
+            if (contestOptional.isEmpty()) return null;
             return new ContestDTO(contestOptional.get());
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,7 +180,7 @@ public class GetService {
     public List<AchievementDTO> getLockedAchievementsByUserId(Long id) {
         try {
             User user = getUser(id);
-            if(user == null) return null;
+            if (user == null) return null;
             List<Achievement> all = achievementRepository.findAll();
             List<Achievement> userAchievements = user.getAchievementList();
             List<Achievement> ans = new ArrayList<>(all);
@@ -195,7 +195,7 @@ public class GetService {
     public List<AchievementDTO> getAchievementsByUserId(Long id) {
         try {
             User user = getUser(id);
-            if(user == null) return null;
+            if (user == null) return null;
             return transformListAchievement(user.getAchievementList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,7 +206,7 @@ public class GetService {
     private List<AchievementDTO> transformListAchievement(List<Achievement> list) {
         try {
             List<AchievementDTO> ans = new ArrayList<>();
-            for(var el : list) {
+            for (var el : list) {
                 ans.add(new AchievementDTO(el));
             }
             return ans;
@@ -258,7 +258,7 @@ public class GetService {
     public List<CategoryDTO> getCategoriesByItemId(Long id) {
         try {
             Optional<Item> itemOptional = itemRepository.findById(id);
-            if(itemOptional.isEmpty()) return null;
+            if (itemOptional.isEmpty()) return null;
             Item item = itemOptional.get();
             return transformListCategory(item.getCategoryList());
         } catch (Exception e) {
@@ -270,7 +270,7 @@ public class GetService {
     public List<UserDTO> getUsersByAchievementId(Long id) {
         try {
             Optional<Achievement> achievementOptional = achievementRepository.findById(id);
-            if(achievementOptional.isEmpty()) return null;
+            if (achievementOptional.isEmpty()) return null;
             return transformListUser(achievementOptional.get().getReceivedUsers());
         } catch (Exception e) {
             e.printStackTrace();

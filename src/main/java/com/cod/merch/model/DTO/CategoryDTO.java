@@ -18,7 +18,7 @@ public class CategoryDTO {
         name = category.getName();
         description = category.getDescription();
         items = new ArrayList<>();
-        for(var item : category.getItemList()) {
+        for (var item : category.getItemList()) {
             items.add(new ItemDTO(item));
         }
     }

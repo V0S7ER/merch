@@ -34,6 +34,7 @@ public class Contest {
         this.date = date;
         this.cost = cost;
     }
+
     public Contest() {
 
     } //Constructors

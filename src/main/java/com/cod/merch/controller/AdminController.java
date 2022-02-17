@@ -29,7 +29,7 @@ public class AdminController {
         return adminReturn(OK);
     }
 
-    @PostMapping(value =  "/contest")
+    @PostMapping(value = "/contest")
     public synchronized ResponseEntity createContest(ContestRequest request) {
         boolean OK = adminService.createContest(request);
         return adminReturn(OK);

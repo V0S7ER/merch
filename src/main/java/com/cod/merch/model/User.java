@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "user")
@@ -16,6 +17,9 @@ public class User {
     private String email;
     private String name;
     private String surname;
+    @Column(nullable = true)
+    private String photo;
+    private Date birthday;
     private String password;
     private Boolean sex; //0 - female, 1 - male
     @Column(name = "admin")
@@ -61,17 +65,19 @@ public class User {
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "basket",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "item_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> basket; //ManyToMany
 
-    public User(String name, String surname, String password, boolean sex, Department department, String email) {
+    public User(String name, String surname, String password, Date birthday, boolean sex, Department department, String email, String photo) {
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.sex = sex;
         this.department = department;
         this.email = email;
+        this.birthday = birthday;
+        this.photo = photo;
         isAdmin = false;
         balance = 0L;
     }
@@ -97,9 +103,9 @@ public class User {
     }
 
     public boolean buyFromBasket(Item item) {
-        if(balance >= item.getPrice()) {
+        if (balance >= item.getPrice()) {
             basket.remove(item);
-            balance-=item.getPrice();
+            balance -= item.getPrice();
             return true;
         }
         return false;
@@ -111,7 +117,7 @@ public class User {
     }
 
     public void removeWonContest(Contest contest) {
-        if(wonContests.contains(contest)) {
+        if (wonContests.contains(contest)) {
             wonContests.remove(contest);
             //balance-=contest.getCost(); //Аналогично удалению ачивки: баланс НЕ МЕНЯЕМ, если уж ошиблись
         }
@@ -123,7 +129,7 @@ public class User {
     }
 
     public void removeAchievement(Achievement achievement) {
-        if(achievementList.contains(achievement)) {
+        if (achievementList.contains(achievement)) {
             achievementList.remove(achievement);
             //balance-=achievement.getCost(); //Если юзеру было добавлена ачивка, то баланс уже нельзя уменьшить путем удаления ачивки, иначе мог бы быть отрицательный баланс
         }

@@ -51,6 +51,7 @@ public class Item {
         this.description = description;
         this.photo = photo;
     }
+
     public Item() {
 
     }

@@ -3,14 +3,12 @@ package com.cod.merch.model.DTO.request;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
-import java.util.Date;
-
 @Data
 public class ContestRequest {
     @Nullable
     private String name;
     @Nullable
-    private Date date;
+    private String date; // dd.MM.yyyy hh:mm
     @Nullable
     private Long cost;
 

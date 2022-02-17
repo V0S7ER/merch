@@ -10,6 +10,9 @@ import com.cod.merch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -18,15 +21,20 @@ public class AuthService {
     private final UserRepository userRepository;
     private final DepartmentRepository departmentRepository;
 
+    private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
     public boolean register(RegisterRequest request) {
         try {
             Department department = departmentRepository.getById(request.getDepartment_id());
+            Date date = format.parse(request.getBirthday());
             User user = new User(request.getName(),
                     request.getSurname(),
                     request.getPassword(),
-                    request.isSex(),
+                    date,
+                    request.getSex(),
                     department,
-                    request.getEmail());
+                    request.getEmail(),
+                    request.getPhoto());
             userRepository.save(user);
             return true;
         } catch (Exception e) {

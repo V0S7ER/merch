@@ -14,6 +14,9 @@ import com.cod.merch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -24,6 +27,8 @@ public class AdminService {
     private final ContestRepository contestRepository;
     private final AchievementRepository achievementRepository;
     private final ItemRepository itemRepository;
+
+    private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
     public boolean setAdmin(Long userId, String adminEmail, String adminPassword) {
         if (!isAdmin(adminEmail, adminPassword)) {
@@ -82,10 +87,11 @@ public class AdminService {
             return false;
         }
         try {
-            if (request.getDate() == null) return false;
+            if (request.getDate() == null || request.getDate().isEmpty()) return false;
             if (request.getName() == null || request.getName().isEmpty()) return false;
             if (request.getCost() == null) return false;
-            Contest contest = new Contest(request.getName(), request.getDate(), request.getCost());
+            Date date = format.parse(request.getDate());
+            Contest contest = new Contest(request.getName(), date, request.getCost());
             contestRepository.save(contest);
             return true;
         } catch (Exception e) {
@@ -176,8 +182,9 @@ public class AdminService {
             if (request.getName() != null && !request.getName().isEmpty()) {
                 contest.setName(request.getName());
             }
-            if (request.getDate() != null) {
-                contest.setDate(request.getDate());
+            if (request.getDate() != null && !request.getDate().isEmpty()) {
+                Date date = format.parse(request.getDate());
+                contest.setDate(date);
             }
             if (request.getCost() != null) {
                 Long delta = request.getCost() - contest.getCost();

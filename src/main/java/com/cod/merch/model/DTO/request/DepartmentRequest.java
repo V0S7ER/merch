@@ -6,10 +6,10 @@ import org.springframework.lang.Nullable;
 @Data
 public class DepartmentRequest {
     @Nullable
-    String name;
+    private String name;
     @Nullable
-    String description;
+    private String description;
 
-    String admin_email;
-    String admin_password;
+    private String admin_email;
+    private String admin_password;
 }
