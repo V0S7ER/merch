@@ -1,15 +1,13 @@
 package com.cod.merch.controller;
 
 import com.cod.merch.model.DTO.request.ChangeUserRequest;
+import com.cod.merch.model.DTO.response.BooleanResponse;
 import com.cod.merch.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api/user")
@@ -70,6 +68,18 @@ public class UserController {
     public synchronized ResponseEntity changeUser(ChangeUserRequest request) {
         boolean OK = userService.changeUser(request);
         return responseUser(OK);
+    }
+
+    @GetMapping(value = "/basket/contains/{id}")
+    public synchronized ResponseEntity<BooleanResponse> containsItemInBasket(@PathVariable Long id, String email, String password) {
+        BooleanResponse OK = userService.itemContainsInBasket(id, email, password);
+        return ResponseEntity.ok(OK);
+    }
+
+    @GetMapping(value = "/wish/contains/{id}")
+    public synchronized ResponseEntity<BooleanResponse> containsItemInWishList(@PathVariable Long id, String email, String password) {
+        BooleanResponse OK = userService.itemContainsInWishList(id, email, password);
+        return ResponseEntity.ok(OK);
     }
 
     private ResponseEntity responseUser(boolean OK) {

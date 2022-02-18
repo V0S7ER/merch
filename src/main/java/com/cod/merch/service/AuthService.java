@@ -26,7 +26,9 @@ public class AuthService {
     public boolean register(RegisterRequest request) {
         try {
             Department department = departmentRepository.getById(request.getDepartment_id());
-            Date date = format.parse(request.getBirthday());
+            Date date = null;
+            if(request.getBirthday() != null && !request.getBirthday().isEmpty())
+                date = format.parse(request.getBirthday());
             User user = new User(request.getName(),
                     request.getSurname(),
                     request.getPassword(),

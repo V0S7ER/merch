@@ -55,4 +55,14 @@ public class Item {
     public Item() {
 
     }
+
+    public boolean addCategory(Category category) {
+        try {
+            categoryList.add(category);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

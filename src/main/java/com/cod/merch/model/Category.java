@@ -19,9 +19,19 @@ public class Category {
 
     private String description; //fields
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Item2Category> item2CategoryList;//OneToMany
 
-    @ManyToMany(mappedBy = "categoryList", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "categoryList", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Item> itemList; //ManyToMany
+
+    public boolean addItem(Item item) {
+        try {
+            itemList.add(item);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

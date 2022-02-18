@@ -1,6 +1,7 @@
 package com.cod.merch.service;
 
 import com.cod.merch.model.DTO.request.ChangeUserRequest;
+import com.cod.merch.model.DTO.response.BooleanResponse;
 import com.cod.merch.model.Department;
 import com.cod.merch.model.Item;
 import com.cod.merch.model.User;
@@ -171,6 +172,30 @@ public class UserService {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public BooleanResponse itemContainsInBasket(Long id, String email, String password) {
+        try {
+            Item item = getItemById(id);
+            User user = getAuthorizedUser(email, password);
+            if(item == null || user == null) return new BooleanResponse(false);
+            return new BooleanResponse(user.getBasket().contains(item));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BooleanResponse(false);
+        }
+    }
+
+    public BooleanResponse itemContainsInWishList(Long id, String email, String password) {
+        try {
+            Item item = getItemById(id);
+            User user = getAuthorizedUser(email, password);
+            if(item == null || user == null) return new BooleanResponse(false);
+            return new BooleanResponse(user.getWishList().contains(item));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BooleanResponse(false);
         }
     }
 

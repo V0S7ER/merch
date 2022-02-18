@@ -1,16 +1,10 @@
 package com.cod.merch.service;
 
-import com.cod.merch.model.Achievement;
-import com.cod.merch.model.Contest;
+import com.cod.merch.model.*;
 import com.cod.merch.model.DTO.request.AchievementRequest;
 import com.cod.merch.model.DTO.request.ContestRequest;
 import com.cod.merch.model.DTO.request.ItemRequest;
-import com.cod.merch.model.Item;
-import com.cod.merch.model.User;
-import com.cod.merch.repository.AchievementRepository;
-import com.cod.merch.repository.ContestRepository;
-import com.cod.merch.repository.ItemRepository;
-import com.cod.merch.repository.UserRepository;
+import com.cod.merch.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +21,7 @@ public class AdminService {
     private final ContestRepository contestRepository;
     private final AchievementRepository achievementRepository;
     private final ItemRepository itemRepository;
+    private final CategoryRepository categoryRepository;
 
     private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
@@ -243,6 +238,20 @@ public class AdminService {
         }
     }
 
+    public boolean setUserBalance(Long id, String adminEmail, String adminPassword, Long balance) {
+        if (!isAdmin(adminEmail, adminPassword)) return false;
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+            if (userOptional.isEmpty()) return false;
+            User user = userOptional.get();
+            user.setBalance(balance);
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public boolean setAchievementToUser(Long userId, Long achievementId, String adminEmail, String adminPassword) {
         if (!isAdmin(adminEmail, adminPassword)) return false;
         try {
@@ -260,16 +269,19 @@ public class AdminService {
         }
     }
 
-    public boolean setUserBalance(Long id, String adminEmail, String adminPassword, Long balance) {
-        if (!isAdmin(adminEmail, adminPassword)) return false;
+    public boolean addItemToCategory(Long item_id, Long category_id, String admin_email, String admin_password) {
+        if(!isAdmin(admin_email, admin_password)) return false;
         try {
-            Optional<User> userOptional = userRepository.findById(id);
-            if (userOptional.isEmpty()) return false;
-            User user = userOptional.get();
-            user.setBalance(balance);
-            userRepository.save(user);
+            Optional<Item> itemOptional = itemRepository.findById(item_id);
+            Optional<Category> categoryOptional = categoryRepository.findById(category_id);
+            if(itemOptional.isEmpty() || categoryOptional.isEmpty()) return false;
+            Item item = itemOptional.get();
+            Category category = categoryOptional.get();
+            item.addCategory(category);
+            itemRepository.save(item);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

@@ -95,6 +95,12 @@ public class AdminController {
         return adminReturn(OK);
     }
 
+    @PostMapping(value = "/category/add_item/{category_id}")
+    public synchronized ResponseEntity addItemToCategory(@PathVariable Long category_id, Long item_id, String admin_email, String admin_password) {
+        boolean OK = adminService.addItemToCategory(item_id, category_id, admin_email, admin_password);
+        return adminReturn(OK);
+    }
+
     private ResponseEntity adminReturn(boolean OK) {
         return OK ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
     }
